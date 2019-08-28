@@ -16,8 +16,8 @@ module register_map(
 
 
     // this is a known value so we preset it correctly.
-    parameter REGS             = 2;
-    parameter POWEROF2REGS     = $clog2(REGS) ** 2;
+    parameter REGS         = 2;
+    parameter POWEROF2REGS = (1 << $clog2(REGS));
 
 
     // assign resets and clocks

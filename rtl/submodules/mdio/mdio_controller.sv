@@ -68,7 +68,6 @@ module mdio_controller(
             transmit_ready_reg <= 1'd0;
             receive_valid_reg  <= 1'd0;
             mdc                <= 1'b0;
-            mdc                <= mdc_next;
             mdio_out_reg       <= 1'b0;
             mdio_out_en_reg    <= 1'b0;
         end else begin
@@ -80,6 +79,7 @@ module mdio_controller(
             opcode_reg         <= opcode_reg_next;
             transmit_ready_reg <= transmit_ready_reg_next;
             receive_valid_reg  <= receive_valid_reg_next;
+            mdc                <= mdc_next;
             mdio_out_reg       <= mdio_out_reg_next;
             mdio_out_en_reg    <= mdio_out_en_reg_next;
         end
@@ -188,13 +188,14 @@ module mdio_controller(
         endcase
 
 
-        // other assignments
-        mdio           = (mdio_out_en_reg) ? mdio_out_reg : 1'bz;
-        mdio_in        = mdio;
-        receive_data   = lower_data_reg;
-        transmit_ready = transmit_ready_reg;
-        receive_valid  = receive_valid_reg;
     end
+
+
+    assign mdio           = (mdio_out_en_reg) ? mdio_out_reg : 1'bz;
+    assign mdio_in        = mdio;
+    assign receive_data   = lower_data_reg;
+    assign transmit_ready = transmit_ready_reg;
+    assign receive_valid  = receive_valid_reg;
 
 
 endmodule
