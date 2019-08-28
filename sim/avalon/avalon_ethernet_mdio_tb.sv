@@ -63,6 +63,15 @@ module avalon_ethernet_mdio_tb();
     );
 
 
+    mdio_slave_model
+    mdio_slave_model(
+        .reset,
+        .phy_address     (5'd7), // set physical address to 7 for testing
+        .mdc,
+        .mdio
+    );
+
+
     // extra logic needed to do the testing
     always_comb begin : test_logic
         // default
@@ -95,12 +104,14 @@ module avalon_ethernet_mdio_tb();
     /*                                                                                                                                                       */
     /*********************************************************************************************************************************************************/
     
-    logic  [1:0]   st;
-    logic  [1:0]   op;
-    logic  [4:0]   pa5;
-    logic  [4:0]   ra5;
-    logic  [1:0]   ta;
-    logic  [15:0]  data;
+    integer                seed   = 943247;
+    integer                errors = 0;
+    integer                i;
+    logic    [1:0]         op;
+    logic    [4:0]         ra;
+    logic    [4:0]         pa;
+    logic    [15:0]        data;
+    logic    [31:0][15:0]  test_data;
 
 
     /*********************************************************************************************************************************************************/
@@ -132,36 +143,46 @@ module avalon_ethernet_mdio_tb();
     // apply test stimulus
     // synopsys translate_off
     initial begin
+        // set the random seed
+        $urandom(seed);
 
         // reset the system
         hardware_reset();
 
         // set field constants
-        st = 2'b01;
-        op = 2'b01; // opcode for write (readh is 10)
-        ta = 2'b10;
+        pa = 5'd7;  // set phy address 7
 
+        // randomize data to be written
+        for(i = 0; i < 32; i++)
+            test_data[i] = $urandom;
 
-        // do constant transmits
-        repeat(16) begin
-            pa5  = $urandom;
-            ra5  = $urandom;
-            data = $urandom;
-            tx({st, op, pa5, ra5, ta, data});
+        // set opcode to write
+        op   = 2'b01; 
+
+        // write all test data to mdio core
+        for(i = 0; i < 32; i++) begin
+            ra  = i;
+            tx({2'b01, op, ra, pa, 2'b10, test_data[i]});
         end
 
+        // set opcode to read
+        op   = 2'b10; 
 
-        // do randomly timed transmits
-        repeat(16) begin
-            // wait some time
-            repeat($urandom_range(1, 10000)) @(posedge clk);
+        // read back all test data from mdio core and check it matches
+        for(i = 0; i < 32; i++) begin
+            ra  = i;
+            tx({2'b01, op, ra, pa, 2'b00, 16'd0});
+            rx();
 
-            pa5  = $urandom;
-            ra5  = $urandom;
-            data = $urandom;
-            tx({st, op, pa5, ra5, ta, data});
+            if(data_out != test_data[i]) begin
+               $warning("Result Miss Match\n got:      %d\n expected: %d",
+                   data_out, test_data[i]
+               );
+               errors++;
+            end
         end
 
+        $display("Total Errors: %d", errors);
 
         $stop;
      end

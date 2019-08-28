@@ -14,5 +14,7 @@
 
 ../../rtl/topmodules/avalon_ethernet_mac.sv
 
+../mdio_slave_model.sv
+
 avalon_ethernet_mdio_tb.sv
 

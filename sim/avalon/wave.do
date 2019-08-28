@@ -1,5 +1,26 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/reset
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/phy_address
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/mdc
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/mdio
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/state
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/bit_count
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/op
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/ra
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/pa
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/data
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/data_reg
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/state_next
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/bit_count_next
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/op_next
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/ra_next
+add wave -noupdate -expand -group mdio_slave_model -radix unsigned /avalon_ethernet_mdio_tb/mdio_slave_model/pa_next
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/data_next
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/data_reg_next
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/mdio_out_en
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/mdio_out
+add wave -noupdate -expand -group mdio_slave_model /avalon_ethernet_mdio_tb/mdio_slave_model/mdio_in
 add wave -noupdate -expand -group avalon_ethernet_mac /avalon_ethernet_mdio_tb/dut/clk
 add wave -noupdate -expand -group avalon_ethernet_mac /avalon_ethernet_mdio_tb/dut/reset
 add wave -noupdate -expand -group avalon_ethernet_mac /avalon_ethernet_mdio_tb/dut/reg_read
@@ -101,7 +122,7 @@ add wave -noupdate -expand -group mdio_controller /avalon_ethernet_mdio_tb/dut/m
 add wave -noupdate -expand -group mdio_controller /avalon_ethernet_mdio_tb/dut/mdio_core/mdio_controller/mdio_out_reg_next
 add wave -noupdate -expand -group mdio_controller /avalon_ethernet_mdio_tb/dut/mdio_core/mdio_controller/mdio_out_en_reg_next
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {169500 ps} 0}
+WaveRestoreCursors {{Cursor 1} {344744600 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 585
 configure wave -valuecolwidth 217
@@ -117,4 +138,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {8500 ps} {333500 ps}
+WaveRestoreZoom {0 ps} {2349533600 ps}
